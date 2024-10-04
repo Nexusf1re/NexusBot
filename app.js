@@ -9,7 +9,7 @@ app.use(bot.webhookCallback('/webhook'));
 
 // Defina os comandos e respostas
 bot.start((ctx) => ctx.reply('Bem-vindo ao bot!'));
-bot.command('Aplicativo', (ctx) => {
+bot.command('aplicativo', (ctx) => {
     ctx.reply('Clique no link para acessar o Sistema Financeiro: https://t.me/n3xuss_bot/SistemaFinanceiro');
 });
 
