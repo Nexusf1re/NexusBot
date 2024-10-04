@@ -1,4 +1,4 @@
-const express = require('express'); // Certifique-se de importar o express
+const express = require('express');
 const { Telegraf } = require('telegraf');
 
 const app = express();
@@ -16,8 +16,7 @@ bot.command('aplicativo', (ctx) => {
 // Inicia o servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
+    console.log(`Bot está rodando na porta ${PORT}...`);
 });
 
-// Não use bot.launch() quando estiver usando webhook
-// O bot deve responder às atualizações do webhook diretamente
+// (Não use bot.launch() quando estiver usando webhook)
