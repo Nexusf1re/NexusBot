@@ -1,3 +1,4 @@
+const express = require('express'); // Certifique-se de importar o express
 const { Telegraf } = require('telegraf');
 
 const app = express();
@@ -6,7 +7,6 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 // Middleware para processar atualizações
 app.use(bot.webhookCallback('/webhook'));
 
-
 // Defina os comandos e respostas
 bot.start((ctx) => ctx.reply('Bem-vindo ao bot!'));
 bot.command('Aplicativo', (ctx) => {
@@ -14,11 +14,10 @@ bot.command('Aplicativo', (ctx) => {
 });
 
 // Inicia o servidor
-app.listen(process.env.PORT || 3000, () => {
-    console.log('Bot está rodando...');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
 });
 
-// Define o webhook
-bot.launch();
-
-
+// Não use bot.launch() quando estiver usando webhook
+// O bot deve responder às atualizações do webhook diretamente
