@@ -1,7 +1,7 @@
 const { Telegraf } = require('telegraf');
 
 // Substitua pelo token do seu bot
-const bot = new Telegraf(process.env.BOT_TOKEN || 'SEU_TOKEN_AQUI');
+const bot = new Telegraf(process.env.BOT_TOKEN || '6815698951:AAHsv-xxwU6JbV6G82E2MmSHcIXaVaQ5h2U');
 
 // Comando /Aplicativo
 bot.command('Aplicativo', (ctx) => {
