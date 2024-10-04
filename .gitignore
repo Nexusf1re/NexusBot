@@ -1,0 +1,20 @@
+# Node modules
+node_modules/
+
+# Ambiente de configuração
+.env
+
+# Arquivos de log
+*.log
+
+# Diretórios de build
+dist/
+build/
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Outros arquivos desnecessários
+*.tmp
+*.temp
