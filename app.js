@@ -4,8 +4,12 @@ const { Telegraf } = require('telegraf');
 const app = express();
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
-// Middleware para processar atualizações
-app.use(bot.webhookCallback('/webhook'));
+// Middleware para processar atualizações do Telegram
+app.use('/webhook', (req, res) => {
+    console.log('Recebido webhook:', req.body);
+    bot.webhookCallback('/webhook')(req, res);
+    res.sendStatus(200); // Responde ao Telegram que a requisição foi recebida
+});
 
 // Defina os comandos e respostas
 bot.start((ctx) => ctx.reply('Bem-vindo ao bot!'));
@@ -18,5 +22,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Bot está rodando na porta ${PORT}...`);
 });
-
-// (Não use bot.launch() quando estiver usando webhook)
