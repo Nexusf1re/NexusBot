@@ -1,23 +1,44 @@
 require('dotenv').config(); // Carrega as variáveis de ambiente do .env
 const express = require('express');
-const { Telegraf } = require('telegraf');
+const axios = require('axios'); // Para fazer requisições HTTP
 
 const app = express();
-const bot = new Telegraf(process.env.BOT_TOKEN);
 
 // Middleware para processar atualizações
 app.use(express.json());
-app.use(bot.webhookCallback('/webhook'));
 
-// Defina os comandos e respostas
-bot.start((ctx) => ctx.reply('Bem-vindo ao bot!'));
-bot.command('aplicativo', (ctx) => {
-    ctx.reply('Clique no link para acessar o Sistema Financeiro: https://t.me/n3xuss_bot/SistemaFinanceiro');
-});
+// Função para enviar mensagens para o Telegram
+const sendMessage = async (chatId, text) => {
+    try {
+        await axios.post(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`, {
+            chat_id: chatId,
+            text: text,
+        });
+    } catch (error) {
+        console.error('Erro ao enviar mensagem:', error);
+    }
+};
 
-// Middleware para logar o webhook
+// Endpoint de webhook
 app.post('/webhook', (req, res) => {
-    console.log('Recebido webhook:', req.body);
+    const update = req.body;
+
+    // Verifica se é uma mensagem de texto
+    if (update.message && update.message.text) {
+        const chatId = update.message.chat.id;
+        const messageText = update.message.text;
+
+        // Resposta ao comando /start
+        if (messageText === '/start') {
+            sendMessage(chatId, 'Bem-vindo ao bot!');
+        }
+        // Resposta ao comando /aplicativo
+        else if (messageText === '/aplicativo') {
+            sendMessage(chatId, 'Clique no link para acessar o Sistema Financeiro: https://t.me/n3xuss_bot/SistemaFinanceiro');
+        }
+    }
+
+    console.log('Recebido webhook:', update);
     res.sendStatus(200); // Responda ao Telegram com 200 OK
 });
 
