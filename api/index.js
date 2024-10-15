@@ -24,16 +24,19 @@ const sendMessage = async (chatId, text) => {
 const handleStartCommand = (chatId) => {
     console.log('Comando /start recebido');
     sendMessage(chatId, 'Bem-vindo ao bot!');
+    console.log('Tentativa de envio de mensagem para /start');
 };
 
 const handleAplicativoCommand = (chatId) => {
     console.log('Comando /financeiro recebido');
     sendMessage(chatId, 'Clique no link para acessar o Sistema Financeiro: https://t.me/n3xuss_bot/SistemaFinanceiro');
+    console.log('Tentativa de envio de mensagem para /financeiro');
 };
 
 const handleGoldenCommand = (chatId) => {
     console.log('Comando /golden recebido');
     sendMessage(chatId, 'Clique no link para acessar o Golden Software: https://t.me/n3xuss_bot/goldensoft');
+    console.log('Tentativa de envio de mensagem para /golden');
 };
 
 // Mapeamento de comandos
