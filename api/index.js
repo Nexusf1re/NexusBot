@@ -46,5 +46,11 @@ app.post('/webhook', (req, res) => {
     res.sendStatus(200); // Responda ao Telegram com 200 OK
 });
 
+// Inicia o servidor (se necessário)
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Bot está rodando na porta ${PORT}...`);
+});
+
 // Exporta o app para o Vercel
 module.exports = app;
