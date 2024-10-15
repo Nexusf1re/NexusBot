@@ -36,21 +36,22 @@ app.post('/webhook', (req, res) => {
             console.log('Comando /start recebido');
             sendMessage(chatId, 'Bem-vindo ao bot!');
         }
-        // Resposta ao comando /aplicativo
+        // Resposta ao comando /Financeiro
         else if (messageText === '/Financeiro') {
-            console.log('Comando /aplicativo recebido');
+            console.log('Comando /Financeiro recebido');
             sendMessage(chatId, 'Clique no link para acessar o Sistema Financeiro: https://t.me/n3xuss_bot/SistemaFinanceiro');
         }
+        // Resposta ao comando /GoldenSoft
         else if (messageText === '/GoldenSoft') {
-                console.log('Comando /GoldenSoft recebido');
-                sendMessage(chatId, 'Clique no link para acessar o GoldenSoft: https://t.me/n3xuss_bot/GoldenSoft');
-            }
+            console.log('Comando /GoldenSoft recebido');
+            sendMessage(chatId, 'Clique no link para acessar o GoldenSoft: https://t.me/n3xuss_bot/GoldenSoft');
+        }
     }
 
     res.sendStatus(200); // Responda ao Telegram com 200 OK
 });
 
-// Inicia o servidor (se necessário)
+// Inicia o servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Bot está rodando na porta ${PORT}...`);
