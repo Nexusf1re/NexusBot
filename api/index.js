@@ -20,6 +20,29 @@ const sendMessage = async (chatId, text) => {
     }
 };
 
+// Funções para comandos
+const handleStartCommand = (chatId) => {
+    console.log('Comando /start recebido');
+    sendMessage(chatId, 'Bem-vindo ao bot!');
+};
+
+const handleAplicativoCommand = (chatId) => {
+    console.log('Comando /financeiro recebido');
+    sendMessage(chatId, 'Clique no link para acessar o Sistema Financeiro: https://t.me/n3xuss_bot/SistemaFinanceiro');
+};
+
+const handleGoldenCommand = (chatId) => {
+    console.log('Comando /golden recebido');
+    sendMessage(chatId, 'Clique no link para acessar o Golden Software: https://t.me/n3xuss_bot/goldensoft');
+};
+
+// Mapeamento de comandos
+const commands = {
+    '/start': handleStartCommand,
+    '/financeiro': handleAplicativoCommand,
+    '/golden': handleGoldenCommand,
+};
+
 // Endpoint de webhook
 app.post('/webhook', (req, res) => {
     const update = req.body;
@@ -31,15 +54,12 @@ app.post('/webhook', (req, res) => {
 
         console.log('Recebido webhook:', update);
 
-        // Resposta ao comando /start
-        if (messageText === '/start') {
-            console.log('Comando /start recebido');
-            sendMessage(chatId, 'Bem-vindo ao bot!');
-        }
-        // Resposta ao comando /aplicativo
-        else if (messageText === '/aplicativo') {
-            console.log('Comando /aplicativo recebido');
-            sendMessage(chatId, 'Clique no link para acessar o Sistema Financeiro: https://t.me/n3xuss_bot/SistemaFinanceiro');
+        // Verifica se o comando existe e chama a função correspondente
+        if (commands[messageText]) {
+            commands[messageText](chatId);
+        } else {
+            console.log(`Comando desconhecido recebido: ${messageText}`);
+            sendMessage(chatId, 'Desculpe, não reconheço esse comando.');
         }
     }
 
