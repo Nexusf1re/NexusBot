@@ -21,22 +21,22 @@ const sendMessage = async (chatId, text) => {
 };
 
 // Funções para comandos
-const handleStartCommand = (chatId) => {
+const handleStartCommand = async (chatId) => {
     console.log('Comando /start recebido');
-    sendMessage(chatId, 'Bem-vindo ao bot!');
-    console.log('Tentativa de envio de mensagem para /start');
+    await sendMessage(chatId, 'Bem-vindo ao bot!');
+    console.log('Mensagem de boas-vindas enviada para /start');
 };
 
-const handleAplicativoCommand = (chatId) => {
+const handleAplicativoCommand = async (chatId) => {
     console.log('Comando /financeiro recebido');
-    sendMessage(chatId, 'Clique no link para acessar o Sistema Financeiro: https://t.me/n3xuss_bot/SistemaFinanceiro');
-    console.log('Tentativa de envio de mensagem para /financeiro');
+    await sendMessage(chatId, 'Clique no link para acessar o Sistema Financeiro: https://t.me/n3xuss_bot/SistemaFinanceiro');
+    console.log('Mensagem de acesso ao sistema financeiro enviada');
 };
 
-const handleGoldenCommand = (chatId) => {
+const handleGoldenCommand = async (chatId) => {
     console.log('Comando /golden recebido');
-    sendMessage(chatId, 'Clique no link para acessar o Golden Software: https://t.me/n3xuss_bot/goldensoft');
-    console.log('Tentativa de envio de mensagem para /golden');
+    await sendMessage(chatId, 'Clique no link para acessar o Golden Software: https://t.me/n3xuss_bot/goldensoft');
+    console.log('Mensagem de acesso ao Golden Software enviada');
 };
 
 // Mapeamento de comandos
@@ -47,22 +47,22 @@ const commands = {
 };
 
 // Endpoint de webhook
-app.post('/webhook', (req, res) => {
+app.post('/webhook', async (req, res) => {
     const update = req.body;
 
     // Verifica se é uma mensagem de texto
     if (update.message && update.message.text) {
         const chatId = update.message.chat.id;
-        const messageText = update.message.text;
+        const messageText = update.message.text.toLowerCase(); // Tratando para minúsculas
 
         console.log('Recebido webhook:', update);
 
         // Verifica se o comando existe e chama a função correspondente
         if (commands[messageText]) {
-            commands[messageText](chatId);
+            await commands[messageText](chatId);
         } else {
             console.log(`Comando desconhecido recebido: ${messageText}`);
-            sendMessage(chatId, 'Desculpe, não reconheço esse comando.');
+            await sendMessage(chatId, 'Desculpe, não reconheço esse comando.');
         }
     }
 
