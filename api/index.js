@@ -59,16 +59,17 @@ app.post('/webhook', async (req, res) => {
 
         // Verifica se o comando existe e chama a função correspondente
         if (commands[messageText]) {
-            // A resposta do Telegram é feita de forma assíncrona
-            commands[messageText](chatId).catch(console.error);
+            console.log('Comando reconhecido:', messageText);
+            await commands[messageText](chatId);
+            res.sendStatus(200); // Envia resposta rapidamente ao Telegram
         } else {
             console.log(`Comando desconhecido recebido: ${messageText}`);
-            sendMessage(chatId, 'Desculpe, não reconheço esse comando').catch(console.error);
+            await sendMessage(chatId, 'Desculpe, não reconheço esse comando.');
+            res.sendStatus(200); // Envia resposta rapidamente ao Telegram
         }
+    } else {
+        res.sendStatus(400); // Resposta para mensagens que não são de texto
     }
-
-    // Retorna 200 OK ao Telegram rapidamente
-    res.sendStatus(200);
 });
 
 // Inicia o servidor (se necessário)
